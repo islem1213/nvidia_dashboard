@@ -1,18 +1,54 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   body {
-    @apply bg-bg-base text-white antialiased font-sans m-0 p-0 overflow-x-hidden;
+    background-color: #0B0F14;
+    color: #F9FAFB;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2D3748;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
   }
 }
 
 @layer utilities {
   .shimmer-bg {
-    background: linear-gradient(90deg, #111827 0%, #1f2937 50%, #111827 100%);
+    background: linear-gradient(90deg, #1F2937 0%, #2D3748 50%, #1F2937 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -23,6 +59,26 @@
   100% {
     background-position: 200% 0;
   }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(140, 255, 63, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(140, 255, 63, 0.8);
+  }
+}
+
+.glow-text {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Custom scrollbar for webkit */

@@ -275,9 +275,13 @@ def get_company_details(ticker: str, period: str = "1D"):
             else:
                 time_str = idx.strftime("%b %d, %Y") if hasattr(idx, 'strftime') else str(idx)
                 
+            # Provide OHLCV data for candlestick charts
             chart_data.append({
                 "time": time_str,
-                "price": float(row['Close']),
+                "open": float(row['Open']) if not pd.isna(row['Open']) else float(row['Close']),
+                "high": float(row['High']) if not pd.isna(row['High']) else float(row['Close']),
+                "low": float(row['Low']) if not pd.isna(row['Low']) else float(row['Close']),
+                "close": float(row['Close']),
                 "volume": int(row['Volume']) if not pd.isna(row['Volume']) else 0
             })
     except Exception as e:

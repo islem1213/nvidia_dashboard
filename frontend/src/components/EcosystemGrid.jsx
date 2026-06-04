@@ -13,7 +13,7 @@ export default function EcosystemGrid({ onSelectTicker }) {
             <div className="h-6 w-32 bg-gray-800 rounded shimmer-bg mb-4" />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {[1, 2, 3, 4, 5].map((card) => (
-                <div key={card} className="h-32 bg-bg-card rounded-lg shimmer-bg" />
+                <div key={card} className="h-32 bg-card rounded-lg shimmer-bg" />
               ))}
             </div>
           </div>

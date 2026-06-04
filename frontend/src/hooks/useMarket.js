@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { buildFallbackDetails } from '../data/sectors';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000';
 
@@ -24,7 +25,8 @@ export function useCompanyDetails(ticker, period = '1D') {
     fetcher,
     { refreshInterval: 60000 }
   );
-  return { details: data, error, isLoading };
+  const details = data || (ticker ? buildFallbackDetails(ticker, period) : null);
+  return { details, error, isLoading: isLoading && !details };
 }
 
 export function useNews(ticker = null, category = null) {

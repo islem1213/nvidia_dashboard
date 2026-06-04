@@ -88,7 +88,7 @@ def read_ecosystem():
         raise HTTPException(status_code=500, detail="Internal server error fetching ecosystem grid")
 
 @app.get("/api/company/{ticker}")
-def read_company_details(ticker: str, period: str = Query("1D", regex="^(1D|1W|1M|1Y|5Y)$")):
+def read_company_details(ticker: str, period: str = Query("1D", pattern="^(1D|1W|1M|1Y|5Y)$")):
     """
     Returns detailed specifications for a single ticker.
     Includes role description, fundamentals, price history chart, and recent news.

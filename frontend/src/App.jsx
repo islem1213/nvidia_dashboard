@@ -1,50 +1,50 @@
-import React, { useState } from 'react';
-import KPIBar from './components/KPIBar';
-import EcosystemGrid from './components/EcosystemGrid';
+import React, { useState, useMemo } from 'react';
+import PremiumNavbar from './components/PremiumNavbar';
+import LeftSidebar from './components/LeftSidebar';
 import DetailPanel from './components/DetailPanel';
-import NewsFeed from './components/NewsFeed';
-import EarningsCalendar from './components/EarningsCalendar';
+import { DEFAULT_SELECTED_TICKER } from './data/sectors';
+import { motion } from 'framer-motion';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('grid');
-  const [selectedTicker, setSelectedTicker] = useState(null);
+  const [selectedTicker, setSelectedTicker] = useState(DEFAULT_SELECTED_TICKER);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Mock stats - in production, fetch from API
+  const stats = useMemo(() => ({
+    portfolioValue: 125430,
+    ecosystemMarketCap: 2.5e12,
+    avgPerformance: 2.45,
+    earningsThisWeek: 3,
+  }), []);
 
   return (
-    <div className="min-h-screen bg-bg-base flex flex-col relative overflow-hidden">
-      <KPIBar />
-      
-      {/* Navigation Tabs */}
-      <div className="px-6 pt-6 border-b border-gray-800 flex gap-6 shrink-0">
-        <button 
-          onClick={() => {setActiveTab('grid'); setSelectedTicker(null);}}
-          className={`pb-3 text-[14px] font-medium border-b-2 transition-colors ${activeTab === 'grid' ? 'border-accent text-white' : 'border-transparent text-text-2 hover:text-white'}`}
-        >
-          Ecosystem Grid
-        </button>
-        <button 
-          onClick={() => {setActiveTab('news'); setSelectedTicker(null);}}
-          className={`pb-3 text-[14px] font-medium border-b-2 transition-colors ${activeTab === 'news' ? 'border-accent text-white' : 'border-transparent text-text-2 hover:text-white'}`}
-        >
-          Global News Feed
-        </button>
-        <button 
-          onClick={() => {setActiveTab('earnings'); setSelectedTicker(null);}}
-          className={`pb-3 text-[14px] font-medium border-b-2 transition-colors ${activeTab === 'earnings' ? 'border-accent text-white' : 'border-transparent text-text-2 hover:text-white'}`}
-        >
-          Earnings Calendar
-        </button>
-      </div>
+    <div className="min-h-screen bg-bg-base flex flex-col">
+      <PremiumNavbar stats={stats} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-      {/* Main Content Area */}
-      <div className="flex-1 relative overflow-hidden flex">
-        <div className="flex-1 h-full overflow-y-auto relative">
-          {activeTab === 'grid' && <EcosystemGrid onSelectTicker={setSelectedTicker} />}
-          {activeTab === 'news' && <NewsFeed />}
-          {activeTab === 'earnings' && <EarningsCalendar />}
-        </div>
-        
-        {/* Detail Panel Sidebar */}
-        {selectedTicker && <DetailPanel ticker={selectedTicker} onClose={() => setSelectedTicker(null)} />}
+      <div className="flex flex-1 overflow-hidden flex-col lg:flex-row">
+        <LeftSidebar 
+          selectedTicker={selectedTicker}
+          onSelectTicker={setSelectedTicker}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+
+        <motion.div
+          className="flex-1 overflow-hidden min-w-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {selectedTicker ? (
+            <DetailPanel ticker={selectedTicker} />
+          ) : (
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-text-secondary text-lg mb-2">Select a company to view details</p>
+              </div>
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );

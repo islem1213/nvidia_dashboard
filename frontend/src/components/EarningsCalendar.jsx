@@ -16,9 +16,9 @@ export default function EarningsCalendar() {
         <h2 className="text-white text-xl font-bold">Earnings Calendar</h2>
       </div>
 
-      <div className="bg-bg-card rounded-xl border border-gray-800 overflow-hidden flex-1 flex flex-col">
+      <div className="bg-card rounded-xl border border-gray-800 overflow-hidden flex-1 flex flex-col">
         {/* Header */}
-        <div className="grid grid-cols-5 bg-gray-900/50 p-4 border-b border-gray-800 text-[11px] font-semibold text-text-2 uppercase tracking-wider">
+        <div className="grid grid-cols-5 bg-gray-900/50 p-4 border-b border-gray-800 text-[11px] font-semibold text-muted uppercase tracking-wider">
           <div>Date</div>
           <div>Ticker</div>
           <div>Time</div>
@@ -57,7 +57,7 @@ export default function EarningsCalendar() {
                     <div className="text-[14px] font-bold text-white">
                       {item.ticker}
                     </div>
-                    <div className="flex items-center gap-1.5 text-[12px] text-text-2">
+                    <div className="flex items-center gap-1.5 text-[12px] text-muted">
                       {item.bmo_amc === 'BMO' ? (
                         <><Sunrise size={14} className="text-yellow-500" /> Before Open</>
                       ) : (
@@ -75,7 +75,7 @@ export default function EarningsCalendar() {
               })}
             </div>
           ) : (
-            <div className="flex items-center justify-center h-40 text-text-2 italic text-sm">
+            <div className="flex items-center justify-center h-40 text-muted italic text-sm">
               No upcoming earnings found.
             </div>
           )}
